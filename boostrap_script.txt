@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Update system packages
+sudo dnf update -y
+
+# Install Apache, PHP
+sudo dnf install -y git httpd php php-mysqli
+sudo dnf install mariadb105-server
+
+
+# Start Apache and enable it to start on boot
+sudo systemctl start httpd
+sudo systemctl enable httpd
+
+#Add the ec2-user user to the apache group.
+sudo usermod -a -G apache ec2-user
+
+#Change the group ownership of the /var/www directory and its contents to the apache group.
+sudo chown -R ec2-user:apache /var/www
+
+#Change the directory permissions of /var/www and its subdirectories to add group write permissions and set the group ID on subdirectories created in the future
+
+sudo chmod 2775 /var/www
+find /var/www -type d -exec sudo chmod 2775 {} \;
+
+#Recursively change the permissions for files in the /var/www directory and its subdirectories to add group write permissions
+find /var/www -type f -exec sudo chmod 0664 {} \;
+
+#Go to root directory 
+cd /var/www/html
+# Clone the GitHub repository
+git clone https://github.com/samiuljahan/phone-app-carbon.git .
+
+# Adjust file permissions
+#sudo chown -R apache:apache /var/www/html
+#sudo chmod -R 755 /var/www/html
+
+
+#mysql -u admin -p -h database-1.cr0a80oeced6.us-east-2.rds.amazonaws.com -P 3306 phone_usage < /var/www/html/phone_usage.sql
+
+
+
