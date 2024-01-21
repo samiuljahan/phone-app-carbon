@@ -3,7 +3,8 @@
  error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-    $host = "database-1.cr0a80oeced6.us-east-2.rds.amazonaws.com";
+    $host = "database-2.cr0a80oeced6.us-east-2.rds.amazonaws.com";
+     //"database-1.cr0a80oeced6.us-east-2.rds.amazonaws.com";
     $port = 3306;
     $username = "admin";
     $password = "12345678";
